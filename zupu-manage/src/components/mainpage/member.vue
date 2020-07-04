@@ -23,8 +23,8 @@
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="memberinfo.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="姓氏" :label-width="formLabelWidth">
-            <el-input v-model="memberinfo.familyName" autocomplete="off"></el-input>
+          <el-form-item label="性别" :label-width="formLabelWidth">
+            <el-input v-model="memberinfo.sex" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="家族id" :label-width="formLabelWidth">
             <el-input v-model="memberinfo.familyid" autocomplete="off"></el-input>
@@ -74,8 +74,8 @@
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="memberinfo.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="姓氏" :label-width="formLabelWidth">
-            <el-input v-model="memberinfo.familyName" autocomplete="off"></el-input>
+          <el-form-item label="性别" :label-width="formLabelWidth">
+            <el-input v-model="memberinfo.sex" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="家族id" :label-width="formLabelWidth">
             <el-input v-model="memberinfo.familyid" autocomplete="off"></el-input>
@@ -105,53 +105,41 @@
             :title="sertitle"
             :visible.sync="innerVisible"
             append-to-body>
-            <el-table border
-              :data="tableData"
-              style="width: 100%">
-              <el-table-column
-                prop="date"
-                label="家族ID">
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                width="70"
-                label="个人ID">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="姓名">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                width="60"
-                label="性别">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="个人简介">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="出生日期">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="是否健在">
-              </el-table-column>
-            </el-table>
+            <ul class="data1">
+              <li>个人ID</li>
+              <li>姓名</li>
+              <li>姓氏</li>
+              <li>性别</li>
+              <li>家族id</li>
+              <li>出生时间</li>
+              <li>属于代数</li>
+              <li>是否建在</li>
+              <li>个人简介</li>
+            </ul>
+            <ul class="data2">
+              <li>{{serform2.id}}</li>
+              <li>{{serform2.name}}</li>
+              <li>{{serform2.familyName}}</li>
+              <li>{{serform2.sex}}</li>
+              <li>{{serform2.familyid}}</li>
+              <li>{{serform2.birth}}</li>
+              <li>{{serform2.number}}</li>
+              <li>{{serform2.alive}}</li>
+              <li>{{serform2.intro}}</li>
+            </ul>
           </el-dialog>
           <el-form :model="serform">
             <el-form-item label="个人ID" :label-width="formLabelWidth">
-             <el-input v-model="serform.id" autocomplete="off"></el-input>
+             <el-input v-model="serform.sid" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="家族ID" :label-width="formLabelWidth">
-             <el-input v-model="serform.familyid" autocomplete="off"></el-input>
+             <el-input v-model="serform.sfamilyid" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="姓名" :label-width="formLabelWidth">
-             <el-input v-model="serform.name" autocomplete="off"></el-input>
+             <el-input v-model="serform.sname" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="性别" :label-width="formLabelWidth">
-             <el-input v-model="serform.sex" autocomplete="off"></el-input>
+             <el-input v-model="serform.ssex" autocomplete="off"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -166,10 +154,21 @@
 export default {
   data () {
     return {
+      serform1: {
+        id: '001',
+        name: '陈小美',
+        familyName: '陈',
+        sex: '女',
+        familyid: '0002',
+        birth: '2000-02-04',
+        number: '16',
+        alive: '是',
+        intro: '一个默默无闻的人'
+      },
       memberinfo: {
         id: '',
         name: '',
-        familyName: '',
+        sex: '',
         familyid: '',
         birth: '',
         number: '',
@@ -182,10 +181,10 @@ export default {
         name: ''
       },
       serform: {
-        id: '',
-        familyid: '',
-        name: '',
-        sex: ''
+        sid: '',
+        sfamilyid: '',
+        sname: '',
+        ssex: ''
       },
       dialogFormVisible: false,
       delFormVisible: false,
@@ -206,13 +205,22 @@ export default {
       this.dialogFormVisible = true
     },
     confirmadd () {
-      this.$confirm('确认添加吗？').then(() => {
-        this.$message({
+      let _this = this
+      _this.$confirm('确认添加吗？').then(() => {
+        _this.$message({
           type: 'success',
           message: '添加成功!'
         })
-        this.dialogFormVisible = false
+        _this.dialogFormVisible = false
       })
+      _this.serform.id = _this.memberinfo.id
+      _this.serform.name = _this.memberinfo.name
+      _this.serform.sex = _this.memberinfo.familyName
+      _this.serform.familyid = _this.memberinfo.familyid
+      _this.serform.birth = _this.memberinfo.birth
+      _this.serform.number = _this.memberinfo.number
+      _this.serform.alive = _this.memberinfo.alive
+      _this.serform.intro = _this.memberinfo.intro
     },
     delmember () {
       this.delFormVisible = true
@@ -227,6 +235,8 @@ export default {
           message: '删除成功!'
         })
         this.delFormVisible = false
+        this.serform.sname = ''
+        this.memberinfo.name = ''
       })
     },
     editmember () {
@@ -240,13 +250,25 @@ export default {
         })
         this.editFormVisible = false
       })
+      this.serform2.alive = '否'
+      this.serform.sname = ''
     },
     sermember () {
       this.outerVisible = true
+      this.serform.sname = ''
     },
     goser () {
-      this.sertitle = this.serform.name + ' 个人信息查询结果'
-      this.innerVisible = true
+      if (this.memberinfo.name !== '陈小美' || this.serform.sname !== '陈小美') {
+        this.$message('没有该成员的信息，请重新检查后输入!')
+      } else {
+        this.sertitle = this.serform.name + ' 个人信息查询结果'
+        this.innerVisible = true
+      }
+    }
+  },
+  computed: {
+    serform2 () {
+      return this.serform1
     }
   }
 }
@@ -295,6 +317,26 @@ export default {
     .bor{
       border-bottom: 10px solid #9EA6B7;
     }
+  }
+}
+.data1,.data2{
+  li{
+    float: left;
+    width: 59px;
+  }
+}
+.data1{
+  width: 600px;
+  li{
+    border: 1px solid beige;
+  }
+}
+.data2{
+  width: 580px;
+  height: 150px;
+  li{
+    border: 1px solid beige;
+    height: 150px;
   }
 }
 </style>

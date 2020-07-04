@@ -44,7 +44,7 @@
       <!-- 删除成员  -->
        <el-dialog title="请在下面要删除的族谱名称或id" :visible.sync="delFormVisible">
          <el-form :model="delform">
-          <el-form-item label="成员所属族谱ID" :label-width="formLabelWidth">
+          <el-form-item label="待删除族谱ID" :label-width="formLabelWidth">
             <el-input v-model="delform.familyid" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="待删除族谱名称" :label-width="formLabelWidth">
@@ -92,40 +92,22 @@
             :title="sertitle"
             :visible.sync="innerVisible"
             append-to-body>
-            <el-table border
-              :data="tableData"
-              style="width: 100%">
-              <el-table-column
-                prop="date"
-                label="家族ID">
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                label="族谱名称">
-              </el-table-column>
-              <el-table-column
-                width="60"
-                prop="address"
-                label="家族姓氏">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                width="60"
-                label="家训">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="家族简介">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="家族代数">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="家族现存人数">
-              </el-table-column>
-            </el-table>
+            <ul class="data1">
+              <li>家族ID</li>
+              <li>族谱名称</li>
+              <li>家族姓氏</li>
+              <li>家族代数</li>
+              <li>家族现存人数</li>
+              <li>家族简介</li>
+            </ul>
+            <ul class="data2">
+              <li>{{serform2.id}}</li>
+              <li>{{serform2.familyName}}</li>
+              <li>{{serform2.familyid}}</li>
+              <li>{{serform2.birth}}</li>
+              <li>{{serform2.number}}</li>
+              <li>{{serform2.intro}}</li>
+            </ul>
           </el-dialog>
           <el-form :model="serform">
             <el-form-item label="家族姓氏" :label-width="formLabelWidth">
@@ -161,6 +143,14 @@ export default {
         number: '',
         intro: ''
       },
+      serform2: {
+        id: '002',
+        familyName: '成都陈家',
+        familyid: '陈',
+        birth: '16',
+        number: '150',
+        intro: '一个默默无闻的家族'
+      },
       delform: {
         familyid: '',
         name: ''
@@ -177,12 +167,7 @@ export default {
       outerVisible: false,
       innerVisible: false,
       formLabelWidth: '120px',
-      sertitle: '',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }]
+      sertitle: ''
     }
   },
   methods: {
@@ -211,6 +196,7 @@ export default {
           message: '删除成功!'
         })
         this.delFormVisible = false
+        this.memberinfo.name = ''
       })
     },
     editfamily () {
@@ -223,14 +209,20 @@ export default {
           message: '修改成功!'
         })
         this.editFormVisible = false
+        this.serform2.number = '148'
       })
     },
     serfamily () {
       this.outerVisible = true
+      this.serform.name = ''
     },
     goser () {
-      this.sertitle = this.serform.name + '  族谱信息查询结果'
-      this.innerVisible = true
+      if (this.memberinfo.name !== '成都陈家' || this.serform.name !== '成都陈家') {
+        this.$message('没有该族谱的信息，请重新检查后输入!')
+      } else {
+        this.sertitle = this.serform.name + '  族谱信息查询结果'
+        this.innerVisible = true
+      }
     }
   }
 }
@@ -279,6 +271,27 @@ export default {
     .bor{
       border-bottom: 10px solid #9EA6B7;
     }
+  }
+}
+.data1,.data2{
+  li{
+    float: left;
+    width: 59px;
+  }
+}
+.data1{
+  width: 600px;
+  height: 60px;
+  li{
+    border: 1px solid beige;
+  }
+}
+.data2{
+  width: 580px;
+  height: 150px;
+  li{
+    border: 1px solid beige;
+    height: 150px;
   }
 }
 </style>

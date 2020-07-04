@@ -37,14 +37,14 @@
       </div>
       <!-- 近亲查询结果-->
        <el-dialog :title="diatitle" :visible.sync="relationVisible">
-        <el-table :data="gridData">
-          <el-table-column property="date" label="个人id" ></el-table-column>
-          <el-table-column property="date" label="姓名" ></el-table-column>
-          <el-table-column property="date" label="性别" ></el-table-column>
-          <el-table-column property="date" label="个人简介" ></el-table-column>
-          <el-table-column property="date" label="出生日期" ></el-table-column>
-          <el-table-column property="date" label="是否健在" ></el-table-column>
-          <el-table-column property="name" label="关系" ></el-table-column>
+        <el-table :data="jqData">
+          <el-table-column property="id" label="个人id" ></el-table-column>
+          <el-table-column property="name" label="姓名" ></el-table-column>
+          <el-table-column property="sex" label="性别" ></el-table-column>
+          <el-table-column property="intro" label="个人简介" ></el-table-column>
+          <el-table-column property="birth" label="出生日期" ></el-table-column>
+          <el-table-column property="alive" label="是否健在" ></el-table-column>
+          <el-table-column property="relation" label="关系" ></el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
           <el-button @click="relationVisible = false">取 消</el-button>
@@ -61,13 +61,13 @@
       </el-dialog>
       <!-- 重大事件查询结果-->
       <el-dialog :title="diatitle" :visible.sync="bigVisible">
-        <el-table :data="gridData">
-          <el-table-column property="date" label="姓名" ></el-table-column>
-          <el-table-column property="date" label="性别" ></el-table-column>
-          <el-table-column property="date" label="事件" ></el-table-column>
-          <el-table-column property="date" label="重大事件" ></el-table-column>
+        <el-table :data="bigData">
+          <el-table-column property="name" label="姓名" ></el-table-column>
+          <el-table-column property="sex" label="性别" ></el-table-column>
+          <el-table-column property="momentname" label="事件" ></el-table-column>
+          <el-table-column property="moment" label="重大事件" ></el-table-column>
           <el-table-column property="date" label="发生日期" ></el-table-column>
-          <el-table-column property="name" label="发生地点" ></el-table-column>
+          <el-table-column property="location" label="发生地点" ></el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
           <el-button @click="bigVisible = false">取 消</el-button>
@@ -76,7 +76,7 @@
       </el-dialog>
       <!-- 族谱树形图-->
       <el-dialog :title="diatitle" :visible.sync="treeVisible">
-        <el-tree default-expand-all :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+        <img class='zupu' src="../../assets/pic/zupu.png" alt="">
         <div slot="footer" class="dialog-footer">
           <el-button @click="treeVisible = false">取 消</el-button>
           <el-button type="primary" @click="treeVisible = false">确 定</el-button>
@@ -89,22 +89,22 @@
 export default {
   data () {
     return {
-      gridData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
+      jqData: [{
+        id: '00020020',
+        name: '玥玥',
+        sex: '女',
+        intro: '美丽善良可爱善解人意',
+        birth: '1999-02-14',
+        alive: '是',
+        relation: '姐妹'
+      }],
+      bigData: [{
+        name: '岳飞',
+        sex: '男',
+        momentname: '收复建康',
+        moment: '哈哈哈哈哈哈哈哈哈哈',
+        date: '999年',
+        location: '建康'
       }],
       memberinfo: {
         id: '',
@@ -118,46 +118,7 @@ export default {
       relationVisible: false,
       fenziVisible: false,
       bigVisible: false,
-      treeVisible: false,
-      data: [{
-        label: '一级 1',
-        children: [{
-          label: '二级 1-1',
-          children: [{
-            label: '三级 1-1-1'
-          }]
-        }]
-      }, {
-        label: '一级 2',
-        children: [{
-          label: '二级 2-1',
-          children: [{
-            label: '三级 2-1-1'
-          }]
-        }, {
-          label: '二级 2-2',
-          children: [{
-            label: '三级 2-2-1'
-          }]
-        }]
-      }, {
-        label: '一级 3',
-        children: [{
-          label: '二级 3-1',
-          children: [{
-            label: '三级 3-1-1'
-          }]
-        }, {
-          label: '二级 3-2',
-          children: [{
-            label: '三级 3-2-1'
-          }]
-        }]
-      }],
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      }
+      treeVisible: false
     }
   },
   methods: {
@@ -240,5 +201,9 @@ export default {
       border-bottom: 10px solid #9EA6B7;
     }
   }
+}
+img.zupu{
+  width: 900px;
+  height: 600px;
 }
 </style>

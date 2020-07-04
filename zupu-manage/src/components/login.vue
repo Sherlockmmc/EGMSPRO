@@ -8,7 +8,6 @@
           <el-col :span='18' class="title">电子族谱管理系统</el-col>
         </el-col>
         <el-col :span='3' :offset="10">2020年07月04日</el-col>
-        <el-col :span='1'>墨刀</el-col>
         <el-col :span='1'>未登录</el-col>
       </el-row>
       <el-row class="login-main">
@@ -38,10 +37,10 @@
                  </el-col>
                </el-row>
                <el-row class="repass">
-                 <el-radio v-model="rempass" label="记住密码">记住密码</el-radio>
+                 <el-radio v-model="repass" label="记住密码">记住密码</el-radio>
                </el-row>
                <el-row>
-                 <el-button>登 录</el-button>
+                 <el-button @click="login">登 录</el-button>
                  <p>忘记密码请联系公司管理员!</p>
                </el-row>
              </div>
@@ -56,7 +55,30 @@ export default {
     return {
       repass: '',
       inputName: '',
-      inputPass: ''
+      inputPass: '',
+      userList: [{name: 'chenyue', passwd: '123456'}]
+    }
+  },
+  methods: {
+    login () {
+      let _this = this
+      let islogin = false
+      _this.$axios({
+        url: 'http://www.keke.com/login',
+        method: 'get'
+      }).then(res => {
+        console.log(res)
+      })
+      _this.userList.forEach((item, index) => {
+        if (item.name === _this.inputName && item.passwd === _this.inputPass) {
+          islogin = true
+        }
+        if (islogin) {
+          _this.$router.push({name: 'index'})
+        } else {
+          this.$message('账户名或者密码不正确！请重新输入！')
+        }
+      })
     }
   }
 }
